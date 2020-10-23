@@ -1,0 +1,163 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+    id 'eclipse'
+    id 'maven-publish'
+    id 'com.jfrog.bintray' version '1.8.5'
+}
+
+group 'com.github.philippheuer.snowflake4j'
+description = 'A library to parse / generate snowflake ids'
+version = String.valueOf(System.getenv("CI_COMMIT_REF_NAME")).replace("v", "")
+
+// Java Version
+sourceCompatibility = 1.8
+
+// Repositories
+repositories {
+    jcenter()
+}
+
+// Dependencies
+dependencies {
+    // Code Generator
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
+    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
+    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
+
+    // Commons Lang
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
+
+    // Testing
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.0'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.7.0'
+    testCompile group: 'org.junit.platform', name: 'junit-platform-runner', version: '1.7.0'
+}
+
+// Testing
+test {
+    // Enable JUnit 5 (Gradle 4.6+).
+    useJUnitPlatform()
+
+    // Always run tests, even when nothing changed.
+    dependsOn 'cleanTest'
+
+    // Show test results.
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+// Artifact Info
+project.ext {
+    groupId = 'com.github.philippheuer.snowflake4j'
+    artifactNamespace = 'philippheuer'
+    artifactName = 'snowflake4j'
+    artifactVersion = String.valueOf(System.getenv("CI_COMMIT_REF_NAME")).replace("v", "") + (Boolean.valueOf(System.getProperty("snapshot")) ? "-SNAPSHOT" : "")
+    artifactDescription = 'Snowflake4J'
+    websiteUrl = 'https://github.com/philippheuer/snowflake4j'
+    issueTrackerUrl = 'https://github.com/philippheuer/snowflake4j/issues'
+    vcsUrl = 'https://github.com/philippheuer/snowflake4j.git'
+}
+
+// Source Compatiblity
+sourceCompatibility = 1.8
+
+/**
+ * Artifact
+ */
+group = project.groupId
+description = project.artifactDescription
+version = project.artifactVersion
+
+/**
+ * Javadoc
+ */
+javadoc {
+    options {
+        title = "${project.artifactName} (v${project.version})"
+        windowTitle = "${project.artifactName} (v${project.version})"
+        encoding = "UTF-8"
+    }
+}
+
+/**
+ * Javadoc / Sources
+ */
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+/**
+ * Deployment
+ */
+def pomConfig = {
+    licenses {
+        license {
+            name "MIT License"
+            url "https://opensource.org/licenses/MIT"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "PhilippHeuer"
+            name "Philipp Heuer"
+            email "git@philippheuer.me"
+        }
+    }
+
+    scm {
+        url project.vcsUrl
+    }
+}
+
+publishing {
+    publications {
+        mainProject(MavenPublication) {
+            from project.components.java
+            groupId project.group
+            artifactId String.valueOf(project.artifactName).toLowerCase()
+            version project.version
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', project.artifactDescription)
+                root.appendNode('name', String.valueOf(project.artifactName))
+                root.appendNode('url', String.valueOf(project.websiteUrl))
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+/**
+ * Bintray Upload
+ */
+bintray {
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_API_KEY")
+    publications = ['mainProject']
+    dryRun = false
+    publish = true
+    override = false
+    pkg {
+        // jcenter repository namespace and name
+        userOrg = String.valueOf(project.artifactNamespace).toLowerCase()
+        repo = 'maven'
+        name = String.valueOf(project.artifactName).toLowerCase()
+        desc = project.description
+        licenses = ['MIT']
+        websiteUrl = project.websiteUrl
+        issueTrackerUrl = project.issueTrackerUrl
+        vcsUrl = project.vcsUrl
+        labels = []
+        publicDownloadNumbers = true
+        version {
+            name = project.version
+            vcsTag = project.version
+            released = new Date()
+        }
+    }
+}
