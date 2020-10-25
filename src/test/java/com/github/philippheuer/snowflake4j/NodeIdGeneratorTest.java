@@ -9,6 +9,7 @@ public class NodeIdGeneratorTest {
     @Test
     public void testNodeIdGenerator() {
         long nodeId = (long) NodeIdGenerator.getNodeId().hashCode() % Snowflake.NODEID_BITFIELD.getMaxValue();
+        System.out.println("testNodeIdGenerator - Value: " + NodeIdGenerator.getNodeId());
         System.out.println("testNodeIdGenerator - NodeID: " + nodeId);
 
         Assertions.assertTrue(nodeId >= 0 && nodeId <= Snowflake.NODEID_BITFIELD.getMaxValue());

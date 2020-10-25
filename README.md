@@ -62,7 +62,7 @@ compile 'com.github.philippheuer.snowflake4j:snowflake4j:0.1.1'
 
 ```java
 // initialize global generator instance
-SnowflakeGenerator.setInstance(SnowflakeGenerator.builder().epochOffset(offset).nodeId(1L).build());
+SnowflakeGenerator.setInstance(SnowflakeGenerator.builder().epochOffset(offset).nodeId(1).build());
 // get id
 Snowflake snowflake = SnowflakeGenerator.getInstance().nextSnowflake();
 System.out.println(snowflake.getId());

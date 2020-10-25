@@ -1,13 +1,15 @@
 package com.github.philippheuer.snowflake4j.util;
 
-import com.github.philippheuer.snowflake4j.Snowflake;
+import lombok.SneakyThrows;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.NetworkInterface;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -20,7 +22,7 @@ public class NodeIdGenerator {
         if (isRunningInsideContainer()) {
             // use the pod / hostname of the container (k8s / docker / oci)
             if (System.getenv("HOSTNAME") != null && !System.getenv("HOSTNAME").equalsIgnoreCase("localhost")) {
-                return System.getenv("HOSTNAME");
+                return hashValue(System.getenv("HOSTNAME"));
             }
         }
 
@@ -31,18 +33,17 @@ public class NodeIdGenerator {
             if (networkInterfaces.hasMoreElements()) {
                 while (networkInterfaces.hasMoreElements()) {
                     NetworkInterface networkInterface = networkInterfaces.nextElement();
-                    byte[] mac = networkInterface.getHardwareAddress();
-                    nodeId.append(Arrays.hashCode(mac));
+                    nodeId.append(Arrays.hashCode(networkInterface.getHardwareAddress()));
                 }
 
-                return nodeId.toString();
+                return hashValue(nodeId.toString());
             }
         } catch (Exception ex) {
             // ignore
         }
 
         // fallback: random on startup
-        return Integer.valueOf(new SecureRandom().nextInt()).toString();
+        return hashValue(String.valueOf(new SecureRandom().nextInt()));
     }
 
     /**
@@ -64,5 +65,10 @@ public class NodeIdGenerator {
         }
 
         return false;
+    }
+
+    @SneakyThrows
+    private static String hashValue(String content) {
+        return new BigInteger(1, MessageDigest.getInstance("SHA-256").digest(content.getBytes(StandardCharsets.UTF_8))).toString(16).substring(0, 16);
     }
 }
