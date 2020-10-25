@@ -32,6 +32,17 @@ public class SnowflakeBitField extends BitField {
     }
 
     /**
+     * <p>Obtains the long value for the specified BitField, appropriately shifted right.</p>
+     *
+     * @see #setIntValue(long,int)
+     * @param holder the long data containing the bits we're interested in
+     * @return the selected bits, shifted right appropriately
+     */
+    public int getIntValue(final long holder) {
+        return (int) ((holder & mask) >> shift_count);
+    }
+
+    /**
      * <p>Replaces the bits with new values.</p>
      *
      * @see #getLongValue(long)
@@ -44,11 +55,23 @@ public class SnowflakeBitField extends BitField {
     }
 
     /**
+     * <p>Replaces the bits with new values.</p>
+     *
+     * @see #getLongValue(long)
+     * @param holder the int data containing the bits we're interested in
+     * @param value the new value for the specified bits
+     * @return the value of holder with the bits from the value parameter replacing the old bits
+     */
+    public long setIntValue(final long holder, final int value) {
+        return (holder & ~mask) | ((value << shift_count) & mask);
+    }
+
+    /**
      * <p>Retrieves the highest possible value for this field.</p>
      *
      * @return the highest possible value for this field
      */
-    public long getMaxValue() {
+    public int getMaxValue() {
         return ((1 << shift_count) - 1);
     }
 

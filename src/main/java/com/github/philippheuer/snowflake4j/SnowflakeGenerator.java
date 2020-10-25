@@ -19,20 +19,20 @@ public class SnowflakeGenerator {
     @Getter
     private static SnowflakeGenerator instance = SnowflakeGenerator.builder().epochOffset(1601510400000L).build();
 
-    private final Long nodeId;
+    private final int nodeId;
 
     private final Long epochOffset;
 
     private Instant lastTimestamp;
 
-    private Long sequence;
+    private Integer sequence;
 
     @Builder
-    public SnowflakeGenerator(Long nodeId, Long epochOffset) {
-        this.nodeId = Optional.ofNullable(nodeId).orElse(NodeIdGenerator.getNodeId());
+    public SnowflakeGenerator(Integer nodeId, Long epochOffset) {
+        this.nodeId = Optional.ofNullable(nodeId).orElse(NodeIdGenerator.getNodeId().hashCode() % Snowflake.NODEID_BITFIELD.getMaxValue());
         this.epochOffset = Optional.ofNullable(epochOffset).orElse(420070400000L);
         lastTimestamp = Instant.now().minusNanos(100);
-        sequence = 0L;
+        sequence = 0;
     }
 
     public synchronized Snowflake nextSnowflake() {
@@ -52,7 +52,7 @@ public class SnowflakeGenerator {
             }
         } else {
             // next millisecond / reset sequence to zero
-            sequence = 0L;
+            sequence = 0;
         }
 
         lastTimestamp = timestamp;

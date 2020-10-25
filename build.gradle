@@ -61,9 +61,6 @@ project.ext {
     vcsUrl = 'https://github.com/philippheuer/snowflake4j.git'
 }
 
-// Source Compatiblity
-sourceCompatibility = 1.8
-
 /**
  * Artifact
  */

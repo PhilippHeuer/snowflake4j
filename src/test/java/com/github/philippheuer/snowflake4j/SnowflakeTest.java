@@ -15,8 +15,8 @@ public class SnowflakeTest {
 
         Assertions.assertEquals(Instant.ofEpochMilli(1454164370664L), snowflake.getTimestamp());
         Assertions.assertEquals(1420070400000L, snowflake.getEpochOffset());
-        Assertions.assertEquals(0L, snowflake.getNodeId());
-        Assertions.assertEquals(0L, snowflake.getSequenceId());
+        Assertions.assertEquals(0, snowflake.getNodeId());
+        Assertions.assertEquals(0, snowflake.getSequenceId());
         Assertions.assertEquals(143000477531897856L, snowflake.getId());
     }
 
@@ -24,12 +24,12 @@ public class SnowflakeTest {
     @DisplayName("Tests the Snowflake generator")
     public void testSnowflakeGenerator() {
         long offset = Instant.now().toEpochMilli();
-        SnowflakeGenerator.setInstance(SnowflakeGenerator.builder().epochOffset(offset).nodeId(1L).build());
+        SnowflakeGenerator.setInstance(SnowflakeGenerator.builder().epochOffset(offset).nodeId(1).build());
         Snowflake snowflake = SnowflakeGenerator.getInstance().nextSnowflake();
 
         Assertions.assertEquals(offset, snowflake.getEpochOffset());
-        Assertions.assertEquals(1L, snowflake.getNodeId());
-        Assertions.assertEquals(0L, snowflake.getSequenceId());
+        Assertions.assertEquals(1, snowflake.getNodeId());
+        Assertions.assertEquals(0, snowflake.getSequenceId());
     }
 
 }

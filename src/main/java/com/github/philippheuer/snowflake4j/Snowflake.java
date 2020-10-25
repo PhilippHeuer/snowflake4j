@@ -26,15 +26,15 @@ public class Snowflake {
     private final Instant timestamp;
 
     @Getter
-    private final long nodeId;
+    private final int nodeId;
 
     @Getter
-    private final long sequenceId;
+    private final int sequenceId;
 
     private Long id;
 
     @Builder
-    public Snowflake(long epochOffset, Instant timestamp, long nodeId, long sequenceId) {
+    public Snowflake(long epochOffset, Instant timestamp, int nodeId, int sequenceId) {
         this.epochOffset = epochOffset;
         this.timestamp = timestamp;
         this.nodeId = nodeId;
@@ -51,8 +51,8 @@ public class Snowflake {
 
         id = 0L;
         id = EPOCH_BITFIELD.setLongValue(id, timestamp.toEpochMilli() - epochOffset);
-        id = NODEID_BITFIELD.setLongValue(id, nodeId);
-        id = SEQUENCE_BITFIELD.setLongValue(id, sequenceId);
+        id = NODEID_BITFIELD.setIntValue(id, nodeId);
+        id = SEQUENCE_BITFIELD.setIntValue(id, sequenceId);
         return id;
     }
 
@@ -65,8 +65,8 @@ public class Snowflake {
      */
     public static Snowflake fromSnowflake(long epochOffset, long id) {
         long epochMillis = EPOCH_BITFIELD.getLongValue(id) + epochOffset;
-        long nodeId = NODEID_BITFIELD.getLongValue(id);
-        long sequenceId = SEQUENCE_BITFIELD.getLongValue(id);
+        int nodeId = NODEID_BITFIELD.getIntValue(id);
+        int sequenceId = SEQUENCE_BITFIELD.getIntValue(id);
 
         return Snowflake.builder().epochOffset(epochOffset).timestamp(Instant.ofEpochMilli(epochMillis)).nodeId(nodeId).sequenceId(sequenceId).build();
     }
