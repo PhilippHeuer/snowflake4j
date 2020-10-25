@@ -36,7 +36,7 @@ and the dependency: (latest, you should use the actual version here)
 <dependency>
     <groupId>com.github.philippheuer.snowflake4j</groupId>
     <artifactId>snowflake4j</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <type>pom</type>
 </dependency>
 ```
@@ -53,7 +53,7 @@ repositories {
 and the dependency:
 
 ```groovy
-compile 'com.github.philippheuer.snowflake4j:snowflake4j:0.1.0'
+compile 'com.github.philippheuer.snowflake4j:snowflake4j:0.1.1'
 ```
 
 # Usage
