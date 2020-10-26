@@ -2,7 +2,8 @@
 
 For high availability within and across data centers, machines generating ids should not have to coordinate with each other.
 
-**ID's are composed of:**
+**IDs are composed of:**
+
 - time - 41 bits (millisecond precision w/ a custom epoch gives us 69 years)
 - configured machine id - 10 bits - gives us up to 1024 machines
 - sequence number - 12 bits - rolls over every 4096 per machine (with protection to avoid rollover in the same ms)
@@ -36,7 +37,7 @@ and the dependency: (latest, you should use the actual version here)
 <dependency>
     <groupId>com.github.philippheuer.snowflake4j</groupId>
     <artifactId>snowflake4j</artifactId>
-    <version>0.1.1</version>
+    <version>1.0.0</version>
     <type>pom</type>
 </dependency>
 ```
@@ -53,7 +54,7 @@ repositories {
 and the dependency:
 
 ```groovy
-compile 'com.github.philippheuer.snowflake4j:snowflake4j:0.1.1'
+compile 'com.github.philippheuer.snowflake4j:snowflake4j:1.0.0'
 ```
 
 # Usage

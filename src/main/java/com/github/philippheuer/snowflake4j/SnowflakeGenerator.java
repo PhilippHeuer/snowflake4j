@@ -31,12 +31,12 @@ public class SnowflakeGenerator {
     public SnowflakeGenerator(Integer nodeId, Long epochOffset) {
         this.nodeId = Optional.ofNullable(nodeId).orElse(NodeIdGenerator.getNodeId().hashCode() % Snowflake.NODEID_BITFIELD.getMaxValue());
         this.epochOffset = Optional.ofNullable(epochOffset).orElse(420070400000L);
-        lastTimestamp = Instant.now().minusNanos(100);
+        lastTimestamp = Instant.ofEpochMilli(System.currentTimeMillis() - 1000);
         sequence = 0;
     }
 
     public synchronized Snowflake nextSnowflake() {
-        Instant timestamp = Instant.now();
+        Instant timestamp = Instant.ofEpochMilli(System.currentTimeMillis());
 
         // verify that the clock wasn't running backwards
         if (timestamp.isBefore(lastTimestamp)) {
@@ -68,7 +68,7 @@ public class SnowflakeGenerator {
      */
     private Instant waitNextMillis(Instant currentTimestamp) {
         while (currentTimestamp.equals(lastTimestamp)) {
-            currentTimestamp = Instant.now();
+            currentTimestamp = Instant.ofEpochMilli(System.currentTimeMillis());
         }
 
         return currentTimestamp;
