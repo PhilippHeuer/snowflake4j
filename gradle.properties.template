@@ -1,0 +1,12 @@
+# Version
+version=0.0.0
+group=com.github.philippheuer.snowflake4j
+
+# Maven Repository
+maven.repository.url=https://oss.sonatype.org/service/local/staging/deploy/maven2
+maven.repository.username=
+maven.repository.password=
+
+# GPG
+signing.gnupg.executable=gpg
+signing.gnupg.keyName=7067D7C1

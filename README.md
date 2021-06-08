@@ -22,17 +22,6 @@ References:
 
 Maven:
 
-Add the repository to your pom.xml with:
-```xml
-<repositories>
-    <repository>
-      <id>jcenter</id>
-      <url>https://jcenter.bintray.com/</url>
-    </repository>
-</repositories>
-```
-and the dependency: (latest, you should use the actual version here)
-
 ```xml
 <dependency>
     <groupId>com.github.philippheuer.snowflake4j</groupId>
@@ -43,15 +32,6 @@ and the dependency: (latest, you should use the actual version here)
 ```
 
 Gradle:
-
-Add the repository to your build.gradle with:
-```groovy
-repositories {
-	jcenter()
-}
-```
-
-and the dependency:
 
 ```groovy
 compile 'com.github.philippheuer.snowflake4j:snowflake4j:1.0.0'
