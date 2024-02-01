@@ -12,6 +12,11 @@ References:
 
 - https://github.com/twitter/snowflake/tree/snowflake-2010
 
+
+| Module                                                                                                                                                                                                | Javadoc                                                                                                                                                                                   |
+|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [![Lib](https://img.shields.io/maven-central/v/com.github.philippheuer.snowflake4j/snowflake4j?label=snowflake4j)](https://search.maven.org/artifact/com.github.philippheuer.snowflake4j/snowflake4j) | [![Javadoc](https://javadoc.io/badge2/com.github.philippheuer.snowflake4j/snowflake4j/javadoc.svg?label=javadoc)](https://javadoc.io/doc/com.github.philippheuer.snowflake4j/snowflake4j) |
+
 ## Library Features
 
 - protects from non-monotonic clocks, i.e. clocks that run backwards
@@ -20,21 +25,10 @@ References:
 
 # Import
 
-Maven:
+**Gradle - Kotlin DSL**
 
-```xml
-<dependency>
-    <groupId>com.github.philippheuer.snowflake4j</groupId>
-    <artifactId>snowflake4j</artifactId>
-    <version>1.0.0</version>
-    <type>pom</type>
-</dependency>
-```
-
-Gradle:
-
-```groovy
-compile 'com.github.philippheuer.snowflake4j:snowflake4j:1.0.0'
+```kotlin
+implementation("com.github.philippheuer.snowflake4j:snowflake4j:1.0.0")
 ```
 
 # Usage
@@ -54,6 +48,14 @@ System.out.println(snowflake.getId());
 ```java
 Snowflake snowflake = Snowflake.fromSnowflake(1420070400000L, 143000477531897856L);
 ```
+
+## Default Epoch
+
+The epoch used in the default instance is `2020-10-01T00:00:00.000Z` (1601510400000L). Snowflake generation will work for ~69 years after the set epoch.
+
+Common Epochs:
+
+- Discord: 1420070400000
 
 ## License
 
