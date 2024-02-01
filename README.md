@@ -28,7 +28,7 @@ References:
 **Gradle - Kotlin DSL**
 
 ```kotlin
-implementation("com.github.philippheuer.snowflake4j:snowflake4j:1.0.0")
+implementation("com.github.philippheuer.snowflake4j:snowflake4j:1.0.1")
 ```
 
 # Usage
