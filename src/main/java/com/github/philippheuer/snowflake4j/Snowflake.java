@@ -4,6 +4,8 @@ import com.github.philippheuer.snowflake4j.util.SnowflakeBitField;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
 
@@ -14,9 +16,11 @@ import java.time.Instant;
  */
 @ToString
 public class Snowflake {
-
+    @ApiStatus.Internal
     public static SnowflakeBitField EPOCH_BITFIELD = new SnowflakeBitField(0x7FFFFFFFFFC00000L);
+    @ApiStatus.Internal
     public static SnowflakeBitField NODEID_BITFIELD = new SnowflakeBitField(0x3FF000L);
+    @ApiStatus.Internal
     public static SnowflakeBitField SEQUENCE_BITFIELD = new SnowflakeBitField(0xFFFL);
 
     @Getter
@@ -34,11 +38,19 @@ public class Snowflake {
     private Long id;
 
     @Builder
-    public Snowflake(long epochOffset, Instant timestamp, int nodeId, int sequenceId) {
+    public Snowflake(long epochOffset, @NotNull Instant timestamp, int nodeId, int sequenceId) {
         this.epochOffset = epochOffset;
         this.timestamp = timestamp;
         this.nodeId = nodeId;
         this.sequenceId = sequenceId;
+
+        // validate
+        if (nodeId < 0 || nodeId > NODEID_BITFIELD.getMaxValue()) {
+            throw new IllegalArgumentException("NodeID must be between 0 and " + NODEID_BITFIELD.getMaxValue());
+        }
+        if (sequenceId < 0 || sequenceId > SEQUENCE_BITFIELD.getMaxValue()) {
+            throw new IllegalArgumentException("SequenceID must be between 0 and " + SEQUENCE_BITFIELD.getMaxValue());
+        }
     }
 
     /**

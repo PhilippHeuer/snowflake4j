@@ -1,6 +1,8 @@
 package com.github.philippheuer.snowflake4j.util;
 
 import lombok.SneakyThrows;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,11 +19,12 @@ import java.util.stream.Stream;
 
 public class NodeIdGenerator {
 
+    @NotNull
     public static String getNodeId() {
         // container environment
         if (isRunningInsideContainer()) {
             // use the pod / hostname of the container (k8s / docker / oci)
-            if (System.getenv("HOSTNAME") != null && !System.getenv("HOSTNAME").equalsIgnoreCase("localhost")) {
+            if (System.getenv("HOSTNAME") != null && !"localhost".equalsIgnoreCase(System.getenv("HOSTNAME"))) {
                 return hashValue(System.getenv("HOSTNAME"));
             }
         }
@@ -58,7 +61,7 @@ public class NodeIdGenerator {
         }
 
         // docker container
-        try (Stream< String > stream = Files.lines(Paths.get("/proc/1/cgroup"))) {
+        try (Stream<String> stream = Files.lines(Paths.get("/proc/1/cgroup"))) {
             return stream.anyMatch(line -> line.contains("/docker"));
         } catch (IOException e) {
             // ignore
@@ -68,7 +71,8 @@ public class NodeIdGenerator {
     }
 
     @SneakyThrows
-    private static String hashValue(String content) {
+    @ApiStatus.Internal
+    public static String hashValue(@NotNull String content) {
         return new BigInteger(1, MessageDigest.getInstance("SHA-256").digest(content.getBytes(StandardCharsets.UTF_8))).toString(16).substring(0, 16);
     }
 }

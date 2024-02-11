@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -21,14 +22,14 @@ public class SnowflakeGenerator {
 
     private final int nodeId;
 
-    private final Long epochOffset;
+    private final long epochOffset;
 
     private Instant lastTimestamp;
 
     private Integer sequence;
 
     @Builder
-    public SnowflakeGenerator(Integer nodeId, Long epochOffset) {
+    public SnowflakeGenerator(@Nullable Integer nodeId, @Nullable Long epochOffset) {
         this.nodeId = Optional.ofNullable(nodeId).orElse(NodeIdGenerator.getNodeId().hashCode() % Snowflake.NODEID_BITFIELD.getMaxValue());
         this.epochOffset = Optional.ofNullable(epochOffset).orElse(420070400000L);
         lastTimestamp = Instant.ofEpochMilli(System.currentTimeMillis() - 1000);
@@ -40,13 +41,13 @@ public class SnowflakeGenerator {
 
         // verify that the clock wasn't running backwards
         if (timestamp.isBefore(lastTimestamp)) {
-            throw new IllegalStateException("The System Clock was running backwards! [Current Timestamp:"+timestamp+"/Last Timestamp:"+lastTimestamp+"]");
+            throw new IllegalStateException("The System Clock is running backwards! [Current Timestamp:" + timestamp + "/Last Timestamp:" + lastTimestamp + "]");
         }
 
         if (timestamp.equals(lastTimestamp)) {
             // 2+ executions in the current millisecond / increase sequence by one
-            sequence = (sequence+1) & Snowflake.NODEID_BITFIELD.getMaxValue();
-            if(sequence == 0) {
+            sequence = (sequence + 1) & Snowflake.NODEID_BITFIELD.getMaxValue();
+            if (sequence == 0) {
                 // Sequence Exhausted, wait till next millisecond.
                 timestamp = waitNextMillis(timestamp);
             }

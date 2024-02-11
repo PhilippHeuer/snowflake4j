@@ -5,7 +5,7 @@ import org.apache.commons.lang3.BitField;
 public class SnowflakeBitField extends BitField {
 
     private final long mask;
-    private final long shift_count;
+    private final long shiftCount;
 
     /**
      * <p>Creates a BitField instance.</p>
@@ -17,29 +17,29 @@ public class SnowflakeBitField extends BitField {
     public SnowflakeBitField(final Long mask) {
         super(mask.intValue());
         this.mask = mask;
-        this.shift_count = mask == 0 ? 0 : Long.numberOfTrailingZeros(mask);
+        this.shiftCount = mask == 0 ? 0 : Long.numberOfTrailingZeros(mask);
     }
 
     /**
      * <p>Obtains the long value for the specified BitField, appropriately shifted right.</p>
      *
-     * @see #setLongValue(long,long)
+     * @see #setLongValue(long, long)
      * @param holder the long data containing the bits we're interested in
      * @return the selected bits, shifted right appropriately
      */
     public long getLongValue(final long holder) {
-        return (holder & mask) >> shift_count;
+        return (holder & mask) >> shiftCount;
     }
 
     /**
      * <p>Obtains the long value for the specified BitField, appropriately shifted right.</p>
      *
-     * @see #setIntValue(long,int)
+     * @see #setIntValue(long, int)
      * @param holder the long data containing the bits we're interested in
      * @return the selected bits, shifted right appropriately
      */
     public int getIntValue(final long holder) {
-        return (int) ((holder & mask) >> shift_count);
+        return (int) ((holder & mask) >> shiftCount);
     }
 
     /**
@@ -51,7 +51,7 @@ public class SnowflakeBitField extends BitField {
      * @return the value of holder with the bits from the value parameter replacing the old bits
      */
     public long setLongValue(final long holder, final long value) {
-        return (holder & ~mask) | ((value << shift_count) & mask);
+        return (holder & ~mask) | ((value << shiftCount) & mask);
     }
 
     /**
@@ -63,7 +63,7 @@ public class SnowflakeBitField extends BitField {
      * @return the value of holder with the bits from the value parameter replacing the old bits
      */
     public long setIntValue(final long holder, final int value) {
-        return (holder & ~mask) | ((value << shift_count) & mask);
+        return (holder & ~mask) | (((long) value << shiftCount) & mask);
     }
 
     /**
@@ -72,7 +72,7 @@ public class SnowflakeBitField extends BitField {
      * @return the highest possible value for this field
      */
     public int getMaxValue() {
-        return ((1 << shift_count) - 1);
+        return (1 << shiftCount) - 1;
     }
 
 }
