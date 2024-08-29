@@ -47,5 +47,5 @@ dependencies {
     implementation("org.jetbrains:annotations:24.1.0")
 
     // bitfield
-    api("org.apache.commons:commons-lang3:3.16.0")
+    api("org.apache.commons:commons-lang3:3.17.0")
 }
