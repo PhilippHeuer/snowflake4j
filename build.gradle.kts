@@ -44,7 +44,7 @@ projectConfiguration {
 
 dependencies {
     // annotations
-    implementation("org.jetbrains:annotations:26.0.0")
+    implementation("org.jetbrains:annotations:26.0.1")
 
     // bitfield
     api("org.apache.commons:commons-lang3:3.17.0")
