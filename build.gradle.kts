@@ -1,6 +1,6 @@
 plugins {
     id("java-library")
-    id("me.philippheuer.configuration") version "0.19.0"
+    id("me.philippheuer.configuration") version "0.20.0"
 }
 
 projectConfiguration {
