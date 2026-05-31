@@ -1,10 +1,10 @@
 {
   "workflows": {
     "Nightly": {
-      "version": "0.11.1",
+      "version": "0.11.2",
       "name": "Nightly",
       "name_slug": "nightly",
-      "job_timeout": 10,
+      "job_timeout": 20,
       "default_branch": "main",
       "container_runtime": "podman",
       "workflow_key": "nightly",
@@ -71,6 +71,12 @@
                   "host": "jcenter.bintray.com:443"
                 },
                 {
+                  "host": "javadoc.io:443"
+                },
+                {
+                  "host": "www.javadocs.dev:443"
+                },
+                {
                   "host": "keyserver.ubuntu.com:443"
                 },
                 {
@@ -505,14 +511,14 @@
         "pkg:github-action/step-security/harden-runner": {
           "id": "step-security/harden-runner",
           "type": "github-action",
-          "version": "v2.19.3",
-          "hash": "ab7a9404c0f3da075243ca237b5fac12c98deaa5"
+          "version": "v2.19.4",
+          "hash": "9af89fc71515a100421586dfdb3dc9c984fbf411"
         },
         "pkg:github/cidverse/cid": {
           "id": "cidverse/cid",
           "type": "github",
-          "version": "0.11.1",
-          "hash": "f565bcbfff61d8e242a2cd541842a695a0cea7ff585260400898404b93332951",
+          "version": "0.11.2",
+          "hash": "db8a7f49517b227263641057e208ec69be928b88ce0419426248b2da446aa91a",
           "gpg-fingerprint": "76A4948E69C62589C7B0AB84E414434DF5371FB6"
         }
       },
@@ -528,10 +534,10 @@
       ]
     },
     "Pull Request": {
-      "version": "0.11.1",
+      "version": "0.11.2",
       "name": "Pull Request",
       "name_slug": "pull-request",
-      "job_timeout": 10,
+      "job_timeout": 20,
       "default_branch": "main",
       "container_runtime": "podman",
       "workflow_key": "pull-request",
@@ -596,6 +602,12 @@
                   "host": "jcenter.bintray.com:443"
                 },
                 {
+                  "host": "javadoc.io:443"
+                },
+                {
+                  "host": "www.javadocs.dev:443"
+                },
+                {
                   "host": "keyserver.ubuntu.com:443"
                 },
                 {
@@ -1030,14 +1042,14 @@
         "pkg:github-action/step-security/harden-runner": {
           "id": "step-security/harden-runner",
           "type": "github-action",
-          "version": "v2.19.3",
-          "hash": "ab7a9404c0f3da075243ca237b5fac12c98deaa5"
+          "version": "v2.19.4",
+          "hash": "9af89fc71515a100421586dfdb3dc9c984fbf411"
         },
         "pkg:github/cidverse/cid": {
           "id": "cidverse/cid",
           "type": "github",
-          "version": "0.11.1",
-          "hash": "f565bcbfff61d8e242a2cd541842a695a0cea7ff585260400898404b93332951",
+          "version": "0.11.2",
+          "hash": "db8a7f49517b227263641057e208ec69be928b88ce0419426248b2da446aa91a",
           "gpg-fingerprint": "76A4948E69C62589C7B0AB84E414434DF5371FB6"
         }
       },
@@ -1053,10 +1065,10 @@
       ]
     },
     "Release": {
-      "version": "0.11.1",
+      "version": "0.11.2",
       "name": "Release",
       "name_slug": "release",
-      "job_timeout": 10,
+      "job_timeout": 20,
       "default_branch": "main",
       "container_runtime": "podman",
       "workflow_key": "release",
@@ -1124,6 +1136,12 @@
                 },
                 {
                   "host": "jcenter.bintray.com:443"
+                },
+                {
+                  "host": "javadoc.io:443"
+                },
+                {
+                  "host": "www.javadocs.dev:443"
                 },
                 {
                   "host": "keyserver.ubuntu.com:443"
@@ -1715,14 +1733,14 @@
         "pkg:github-action/step-security/harden-runner": {
           "id": "step-security/harden-runner",
           "type": "github-action",
-          "version": "v2.19.3",
-          "hash": "ab7a9404c0f3da075243ca237b5fac12c98deaa5"
+          "version": "v2.19.4",
+          "hash": "9af89fc71515a100421586dfdb3dc9c984fbf411"
         },
         "pkg:github/cidverse/cid": {
           "id": "cidverse/cid",
           "type": "github",
-          "version": "0.11.1",
-          "hash": "f565bcbfff61d8e242a2cd541842a695a0cea7ff585260400898404b93332951",
+          "version": "0.11.2",
+          "hash": "db8a7f49517b227263641057e208ec69be928b88ce0419426248b2da446aa91a",
           "gpg-fingerprint": "76A4948E69C62589C7B0AB84E414434DF5371FB6"
         }
       },
@@ -1738,10 +1756,10 @@
       ]
     },
     "Main": {
-      "version": "0.11.1",
+      "version": "0.11.2",
       "name": "Main",
       "name_slug": "main",
-      "job_timeout": 10,
+      "job_timeout": 20,
       "default_branch": "main",
       "container_runtime": "podman",
       "workflow_key": "main",
@@ -1807,6 +1825,12 @@
                 },
                 {
                   "host": "jcenter.bintray.com:443"
+                },
+                {
+                  "host": "javadoc.io:443"
+                },
+                {
+                  "host": "www.javadocs.dev:443"
                 },
                 {
                   "host": "keyserver.ubuntu.com:443"
@@ -2243,14 +2267,14 @@
         "pkg:github-action/step-security/harden-runner": {
           "id": "step-security/harden-runner",
           "type": "github-action",
-          "version": "v2.19.3",
-          "hash": "ab7a9404c0f3da075243ca237b5fac12c98deaa5"
+          "version": "v2.19.4",
+          "hash": "9af89fc71515a100421586dfdb3dc9c984fbf411"
         },
         "pkg:github/cidverse/cid": {
           "id": "cidverse/cid",
           "type": "github",
-          "version": "0.11.1",
-          "hash": "f565bcbfff61d8e242a2cd541842a695a0cea7ff585260400898404b93332951",
+          "version": "0.11.2",
+          "hash": "db8a7f49517b227263641057e208ec69be928b88ce0419426248b2da446aa91a",
           "gpg-fingerprint": "76A4948E69C62589C7B0AB84E414434DF5371FB6"
         }
       },
